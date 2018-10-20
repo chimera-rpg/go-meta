@@ -1,0 +1,6 @@
+[submodule "vendor/src/github.com/veandco/go-sdl2"]
+	path = vendor/src/github.com/veandco/go-sdl2
+	url = https://github.com/veandco/go-sdl2
+[submodule "vendor/src/github.com/eczarny/lexer"]
+	path = vendor/src/github.com/eczarny/lexer
+	url = https://github.com/eczarny/lexer
