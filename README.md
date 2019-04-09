@@ -1,6 +1,6 @@
 # Chimera golang packages
 
-All of these packages presume the usage of [gb](https://getgb.io/). The following assumptions are made:
+All of the packages pulled from this script are either go modules or are data repositories. The following assumptions are made:
 
   * Source for each package is stored in `src/`
   * Produced binaries are stored in `bin/`
@@ -10,13 +10,13 @@ All of these packages presume the usage of [gb](https://getgb.io/). The followin
 ## Initial Setup
 Chimera-go separates client, server, and common code, along with client and server data files, into different directories that correspond to git repositories. These are:
 
-  * /server
+  * /src/go-server
     * https://github.com/chimera-rpg/go-server
     * Server program
-  * /client
+  * /src/go-client
     * https://github.com/chimera-rpg/go-client
     * Client program
-  * /common
+  * /src/go-common
     * https://github.com/chimera-rpg/go-common
     * Shared code between the server and the client
   * /share/chimera/archetypes
@@ -50,9 +50,4 @@ Optionally, for graphics development, you will likely wish to check out `https:/
 
 ## Building
 
-Building can be done by issuing `gb build` to build all software or `gb build package_name` to build a particular package located in the `src/` subdirectory.
-
-    gb build
-    ... or ...
-    gb build client
-    gb build server
+Building can be done by entering into a given module and issuing `go build -o ../../bin/package_name`.
