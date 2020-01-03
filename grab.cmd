@@ -1,4 +1,58 @@
 #!/bin/bash
+:<<BATCH
+@echo off
+
+IF EXIST src\go-client (
+  echo "Updating client..."
+  cd src\go-client
+  git pull
+  cd ..\..
+) ELSE (
+  git clone https://github.com/chimera-rpg/go-client src\go-client
+)
+IF EXIST src\go-server (
+  echo "Updating server..."
+  cd src\go-server
+  git pull
+  cd ..\..
+) ELSE (
+  git clone https://github.com/chimera-rpg/go-server src\go-server
+)
+IF EXIST src\go-common (
+  echo "Updating common..."
+  cd src\go-common
+  git pull
+  cd ..\..
+) ELSE (
+  git clone https://github.com/chimera-rpg/go-common src\go-common
+)
+IF EXIST share/chimera/client (
+  echo "Updating client assets..."
+  cd share\chimera\client
+  git pull
+  cd ..\..
+) ELSE (
+  git clone https://github.com/chimera-rpg/client-data share\chimera\client
+)
+IF EXIST share/chimera/archetypes (
+  echo "Updating archetypes..."
+  cd share\chimera\archetypes
+  git pull
+  cd ..\..
+) ELSE (
+  git clone https://github.com/chimera-rpg/archetypes share\chimera\archetypes
+)
+IF EXIST share/chimera/maps (
+  echo "Updating maps..."
+  cd share\chimera\maps
+  git pull
+  cd ..\..
+) ELSE (
+  git clone https://github.com/chimera-rpg/maps share\chimera\maps
+)
+
+goto:eof
+BATCH
 
 if [ -d "src/go-client" ]
 then
