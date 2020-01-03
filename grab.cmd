@@ -30,7 +30,7 @@ IF EXIST share/chimera/client (
   echo "Updating client assets..."
   cd share\chimera\client
   git pull
-  cd ..\..
+  cd ..\..\..
 ) ELSE (
   git clone https://github.com/chimera-rpg/client-data share\chimera\client
 )
@@ -38,7 +38,7 @@ IF EXIST share/chimera/archetypes (
   echo "Updating archetypes..."
   cd share\chimera\archetypes
   git pull
-  cd ..\..
+  cd ..\..\..
 ) ELSE (
   git clone https://github.com/chimera-rpg/archetypes share\chimera\archetypes
 )
@@ -46,7 +46,7 @@ IF EXIST share/chimera/maps (
   echo "Updating maps..."
   cd share\chimera\maps
   git pull
-  cd ..\..
+  cd ..\..\..
 ) ELSE (
   git clone https://github.com/chimera-rpg/maps share\chimera\maps
 )
