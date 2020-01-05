@@ -31,9 +31,17 @@ Chimera-go separates client, server, and common code, along with client and serv
 
 Optionally, for graphics development, you will likely wish to check out `https://github.com/chimera-rpg/assets` to acquire template graphics, examples, and similar.
 
-### Get all
+### Grab/Update script
 
-    ./clone.sh
+Windows
+```
+> grab
+```
+
+BASH
+```
+$ ./grab.cmd
+```
 
 ### Server setup
 
@@ -50,4 +58,16 @@ Optionally, for graphics development, you will likely wish to check out `https:/
 
 ## Building
 
+### Build Script
+Windows
+```
+> build
+```
+
+BASH
+```
+$ ./build.cmd
+```
+
+### Manual
 Building can be done by entering into a given module and issuing `go build -o ../../bin/package_name`.
