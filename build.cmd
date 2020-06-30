@@ -10,13 +10,13 @@ goto prompt
 :build_client
 echo "Building client..."
 cd src\go-client
-go build -o ..\..\bin\client
+go build -o ..\..\bin\client.exe
 goto:eof
 
 :build_server
   echo "Building server..."
 cd src\go-server
-go build -o ..\..\bin\server
+go build -o ..\..\bin\server.exe
 goto:eof
 
 :build_editor

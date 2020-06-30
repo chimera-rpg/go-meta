@@ -31,9 +31,17 @@ Chimera-go separates client, server, and common code, along with client and serv
 
 Optionally, for graphics development, you will likely wish to check out `https://github.com/chimera-rpg/assets` to acquire template graphics, examples, and similar.
 
-### Get all
+### Grab/Update script
 
-    ./clone.sh
+Windows
+```
+> grab
+```
+
+BASH
+```
+$ ./grab.cmd
+```
 
 ### Server setup
 
@@ -50,4 +58,28 @@ Optionally, for graphics development, you will likely wish to check out `https:/
 
 ## Building
 
+### Build Script
+Windows
+```
+> build
+```
+
+BASH
+```
+$ ./build.cmd
+```
+
+### Manual
 Building can be done by entering into a given module and issuing `go build -o ../../bin/package_name`.
+
+## Additional Setup
+### Client<->Server TLS Encryption
+Chimera supports using an encrypted TCP connection. This can be done by generating the necessary `server.crt` and `server.key` files through the following commands:
+
+```
+openssl genrsa -out server.key 2048
+openssl ecparam -genkey -name secp384r1 -out server.key
+openssl req -new -x509 -sha256 -key server.key -out server.crt -days 3650
+```
+
+At the moment these files are expected to exist in `etc/chimera/` directory.
