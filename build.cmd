@@ -22,7 +22,7 @@ goto:eof
 :build_editor
   echo "Building editor..."
 cd src\go-editor
-go build -o ..\..\bin\editor
+go build -o ..\..\bin\editor.exe
 goto:eof
 
 :prompt

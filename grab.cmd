@@ -58,6 +58,15 @@ IF EXIST share/chimera/maps (
 ) ELSE (
   git clone https://github.com/chimera-rpg/maps share\chimera\maps
 )
+IF EXIST share/chimera/editor (
+  echo "Updating editor assets..."
+  cd share\chimera\editor
+  git pull
+  cd ..\..\..
+) ELSE (
+  git clone https://github.com/chimera-rpg/editor-data share\chimera\editor
+)
+
 
 goto:eof
 BATCH
