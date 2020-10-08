@@ -1,0 +1,24 @@
+[submodule "go-editor"]
+path = src/go-editor
+url = dummy1
+[submodule "go-client"]
+path = src/go-client
+url = dummy2
+[submodule "go-server"]
+path = src/go-server
+url = dummy3
+[submodule "common"]
+path = src/go-common
+url = dummy4
+[submodule "archetypes"]
+path = share/chimera/archetypes
+url = dummy5
+[submodule "maps"]
+path = share/chimera/maps
+url = dummy6
+[submodule "client-assets"]
+path = share/chimera/client
+url = dummy7
+[submodule "editor-assets"]
+path = share/chimera/editor
+url = dummy8
