@@ -31,16 +31,18 @@ Chimera-go separates client, server, and common code, along with client and serv
 
 Optionally, for graphics development, you will likely wish to check out `https://github.com/chimera-rpg/assets` to acquire template graphics, examples, and similar.
 
-### Grab/Update script
+### Gobl-based update/build/watch
 
-Windows
+To see a list of all available tasks:
+
 ```
-> grab
+$ go run .
 ```
 
-BASH
+For example, to acquire all development repositories:
+
 ```
-$ ./grab.cmd
+$ go run . updateAll
 ```
 
 ### Server setup
@@ -58,15 +60,24 @@ $ ./grab.cmd
 
 ## Building
 
-### Build Script
-Windows
+### Gobl Build
+
+See the various build tasks via:
+
 ```
-> build
+$ go run .
 ```
 
-BASH
+To build the client:
+
 ```
-$ ./build.cmd
+$ go run . buildClient
+```
+
+To watch the server sources and recompile on change:
+
+```
+$ go run . watchServer
 ```
 
 ### Manual
