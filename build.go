@@ -13,6 +13,11 @@ func main() {
     exe = ".exe"
   }
 
+  Task("updateMeta").
+    Exec("git", "pull")
+    Result(func(r interface{}) {
+    })
+
 	Task("updateClient").
     Exists("src/go-client").
     Catch(func(err error) error {
@@ -151,6 +156,7 @@ func main() {
     })
 
   Task("updateAll").
+    Run("updateMeta").
     Run("updateServer").
     Run("updateCommon").
     Run("updateEditor").
