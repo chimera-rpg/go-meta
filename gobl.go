@@ -82,7 +82,7 @@ func main() {
 		Run("runEditor")
 
 	Task("runServer").
-		Exec("./bin/server" + exe)
+		Exec("./bin/server"+exe, "--no-prompt")
 
 	Task("runEditor").
 		Exec("./bin/editor" + exe)
