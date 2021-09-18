@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os/exec"
 	"runtime"
 
@@ -14,147 +13,42 @@ func main() {
 		exe = ".exe"
 	}
 
-	Task("updateMeta").
-		Exec("git", "pull").
-		Result(func(r interface{}) {
-		})
+	// Create our repo tasks.
+	repos := map[string][2]string{
+		"updateMeta":         {"./", "https://github.com/chimera-rpg/go-meta"},
+		"updateCommon":       {"src/go-common", "https://github.com/chimera-rpg/go-common"},
+		"updateServer":       {"src/go-server", "https://github.com/chimera-rpg/go-server"},
+		"updateEditor":       {"src/go-editor", "https://github.com/chimera-rpg/go-editor"},
+		"updateEditorAssets": {"share/chimera/editor", "https://github.com/chimera-rpg/editor-data"},
+		"updateArchetypes":   {"share/chimera/archetypes", "https://github.com/chimera-rpg/archetypes"},
+		"updateMaps":         {"share/chimera/maps", "https://github.com/chimera-rpg/maps"},
+		"updateClient":       {"src/go-client", "https://github.com/chimera-rpg/go-client"},
+		"updateClientAssets": {"share/chimera/client", "https://github.com/chimera-rpg/client-data"},
+	}
+	for taskName, repo := range repos {
+		Task(taskName).
+			Exists(repo[0]).
+			Catch(func(err error) error {
+				cmd := exec.Command("git", "clone", repo[1], repo[0])
+				err = cmd.Run()
+				return err
+			}).
+			Chdir(repo[0]).
+			Exec("git", "pull").
+			Result(func(r interface{}) {})
+	}
 
-	Task("updateClient").
-		Exists("src/go-client").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/go-client", "src/go-client")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("src/go-client").
-		Exec("git", "pull").
-		Chdir("../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("updateCommon").
-		Exists("src/go-common").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/go-common", "src/go-common")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("src/go-common").
-		Exec("git", "pull").
-		Chdir("../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("updateServer").
-		Exists("src/go-server").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/go-server", "src/go-server")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("src/go-server").
-		Exec("git", "pull").
-		Chdir("../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("updateEditor").
-		Exists("src/go-editor").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/go-editor", "src/go-editor")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("src/go-editor").
-		Exec("git", "pull").
-		Chdir("../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("updateEditorAssets").
-		Exists("share/chimera/editor").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/editor-data", "share/chimera/editor")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("share/chimera/editor").
-		Exec("git", "pull").
-		Chdir("../../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("updateClientAssets").
-		Exists("share/chimera/client").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/client-data", "share/chimera/client")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("share/chimera/client").
-		Exec("git", "pull").
-		Chdir("../../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("updateArchetypes").
-		Exists("share/chimera/archetypes").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/archetypes", "share/chimera/archetypes")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("share/chimera/archetypes").
-		Exec("git", "pull").
-		Chdir("../../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("updateMaps").
-		Exists("share/chimera/maps").
-		Catch(func(err error) error {
-			cmd := exec.Command("git", "clone", "https://github.com/chimera-rpg/maps", "share/chimera/maps")
-			err = cmd.Run()
-			return err
-		}).
-		Chdir("share/chimera/maps").
-		Exec("git", "pull").
-		Chdir("../../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("buildClient").
-		Chdir("src/go-client").
-		Exec("go", "build", "-v", "-o", "../../bin/client"+exe).
-		Catch(func(err error) error {
-			fmt.Println(err.Error())
-			return nil
-		}).
-		Chdir("../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("buildEditor").
-		Chdir("src/go-editor").
-		Exec("go", "build", "-v", "-o", "../../bin/editor"+exe).
-		Catch(func(err error) error {
-			fmt.Println(err.Error())
-			return nil
-		}).
-		Chdir("../../").
-		Result(func(r interface{}) {
-		})
-
-	Task("buildServer").
-		Chdir("src/go-server").
-		Exec("go", "build", "-v", "-o", "../../bin/server"+exe).
-		Catch(func(err error) error {
-			fmt.Println(err.Error())
-			return nil
-		}).
-		Chdir("../../").
-		Result(func(r interface{}) {
-		})
+	// Create our build tasks.
+	builds := map[string][2]string{
+		"buildServer": {"src/go-server", "../../bin/server" + exe},
+		"buildEditor": {"src/go-editor", "../../bin/editor" + exe},
+		"buildClient": {"src/go-client", "../../bin/client" + exe},
+	}
+	for taskName, build := range builds {
+		Task(taskName).
+			Chdir(build[0]).
+			Exec("go", "build", "-v", "-o", build[1])
+	}
 
 	Task("updateAll").
 		Run("updateMeta").
@@ -174,15 +68,27 @@ func main() {
 
 	Task("watchServer").
 		Watch("src/go-server/*.go", "src/go-server/*/*.go", "src/go-server/*/*/*.go").
-		Run("buildServer")
+		Run("buildServer").
+		Run("runServer")
 
 	Task("watchClient").
 		Watch("src/go-client/*.go", "src/go-client/*/*.go").
-		Run("buildClient")
+		Run("buildClient").
+		Run("runClient")
 
 	Task("watchEditor").
 		Watch("src/go-editor/*.go", "src/go-editor/*/*.go", "src/go-editor/*/*/*.go").
-		Run("buildEditor")
+		Run("buildEditor").
+		Run("runEditor")
+
+	Task("runServer").
+		Exec("./bin/server" + exe)
+
+	Task("runEditor").
+		Exec("./bin/editor" + exe)
+
+	Task("runClient").
+		Exec("./bin/client" + exe)
 
 	Go()
 }
