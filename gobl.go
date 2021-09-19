@@ -26,16 +26,18 @@ func main() {
 		"updateClientAssets": {"share/chimera/client", "https://github.com/chimera-rpg/client-data"},
 	}
 	for taskName, repo := range repos {
-		Task(taskName).
-			Exists(repo[0]).
-			Catch(func(err error) error {
-				cmd := exec.Command("git", "clone", repo[1], repo[0])
-				err = cmd.Run()
-				return err
-			}).
-			Chdir(repo[0]).
-			Exec("git", "pull").
-			Result(func(r interface{}) {})
+		func(taskName string, repo [2]string) {
+			Task(taskName).
+				Exists(repo[0]).
+				Catch(func(err error) error {
+					cmd := exec.Command("git", "clone", repo[1], repo[0])
+					err = cmd.Run()
+					return err
+				}).
+				Chdir(repo[0]).
+				Exec("git", "pull").
+				Result(func(r interface{}) {})
+		}(taskName, repo)
 	}
 
 	// Create our build tasks.
@@ -45,9 +47,11 @@ func main() {
 		"buildClient": {"src/go-client", "../../bin/client" + exe},
 	}
 	for taskName, build := range builds {
-		Task(taskName).
-			Chdir(build[0]).
-			Exec("go", "build", "-v", "-o", build[1])
+		func(taskName string, build [2]string) {
+			Task(taskName).
+				Chdir(build[0]).
+				Exec("go", "build", "-v", "-o", build[1])
+		}(taskName, build)
 	}
 
 	Task("updateAll").
