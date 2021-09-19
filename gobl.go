@@ -4,7 +4,7 @@ import (
 	"os/exec"
 	"runtime"
 
-	. "github.com/kettek/gobl/gobl"
+	. "github.com/kettek/gobl"
 )
 
 func main() {
