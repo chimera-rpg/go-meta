@@ -15,15 +15,7 @@ func main() {
 
 	// Create our repo tasks.
 	Task("updateAll").
-		Run("updateMeta").
-		Run("updateServer").
-		Run("updateCommon").
-		Run("updateEditor").
-		Run("updateEditorAssets").
-		Run("updateArchetypes").
-		Run("updateMaps").
-		Run("updateClient").
-		Run("updateClientAssets")
+		Parallel("updateMeta", "updateServer", "updateCommon", "updateEditor", "updateEditorAssets", "updateArchetypes", "updateMaps", "updateClient", "updateClientAssets")
 
 	repos := map[string][2]string{
 		"updateMeta":         {"./", "https://github.com/chimera-rpg/go-meta"},
