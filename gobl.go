@@ -64,16 +64,19 @@ func main() {
 
 	Task("watchServer").
 		Watch("src/go-server/*.go", "src/go-server/*/*.go", "src/go-server/*/*/*.go").
+		Signaler(SigQuit).
 		Run("buildServer").
 		Run("runServer")
 
 	Task("watchClient").
 		Watch("src/go-client/*.go", "src/go-client/*/*.go").
+		Signaler(SigQuit).
 		Run("buildClient").
 		Run("runClient")
 
 	Task("watchEditor").
 		Watch("src/go-editor/*.go", "src/go-editor/*/*.go", "src/go-editor/*/*/*.go").
+		Signaler(SigQuit).
 		Run("buildEditor").
 		Run("runEditor")
 
