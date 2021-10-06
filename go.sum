@@ -6,5 +6,9 @@ github.com/kettek/gobl v0.1.1-0.20211001032515-e0b42f0d3dc4 h1:2NfgbZSVPP6uG4D/O
 github.com/kettek/gobl v0.1.1-0.20211001032515-e0b42f0d3dc4/go.mod h1:x08Yfd9JU5Xqv69pggE1ieWICu+sZeMphOmhx1TSud4=
 github.com/kettek/gobl v0.1.1-0.20211002073708-6544e49d20cc h1:Op9C+jkL2G1LkbzgeeRMTAAnZVlOTZWf7gkcxXuxKZo=
 github.com/kettek/gobl v0.1.1-0.20211002073708-6544e49d20cc/go.mod h1:x08Yfd9JU5Xqv69pggE1ieWICu+sZeMphOmhx1TSud4=
+github.com/kettek/gobl v0.1.1-0.20211006064701-dfd4446abd75 h1:M3ZS+5x5JLyhrqAFqFNzAZkNZwv/59CUJ7PJAVjicKc=
+github.com/kettek/gobl v0.1.1-0.20211006064701-dfd4446abd75/go.mod h1:x08Yfd9JU5Xqv69pggE1ieWICu+sZeMphOmhx1TSud4=
+github.com/kettek/gobl v0.1.1-0.20211006070456-b182ee634ad8 h1:dyNROJzRTcGayZWA/nGomtDSmkV/ceeRoBQ1VmiymdM=
+github.com/kettek/gobl v0.1.1-0.20211006070456-b182ee634ad8/go.mod h1:x08Yfd9JU5Xqv69pggE1ieWICu+sZeMphOmhx1TSud4=
 github.com/radovskyb/watcher v1.0.7 h1:AYePLih6dpmS32vlHfhCeli8127LzkIgwJGcwwe8tUE=
 github.com/radovskyb/watcher v1.0.7/go.mod h1:78okwvY5wPdzcb1UYnip1pvrZNIVEIh/Cm+ZuvsUYIg=
