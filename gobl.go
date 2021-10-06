@@ -18,22 +18,22 @@ func main() {
 		Parallel("updateMeta", "updateServer", "updateCommon", "updateEditor", "updateEditorAssets", "updateArchetypes", "updateMaps", "updateClient", "updateClientAssets")
 
 	repos := map[string][2]string{
-		"updateMeta":         {"./", "https://github.com/chimera-rpg/go-meta"},
-		"updateCommon":       {"src/go-common", "https://github.com/chimera-rpg/go-common"},
-		"updateServer":       {"src/go-server", "https://github.com/chimera-rpg/go-server"},
-		"updateEditor":       {"src/go-editor", "https://github.com/chimera-rpg/go-editor"},
-		"updateEditorAssets": {"share/chimera/editor", "https://github.com/chimera-rpg/editor-data"},
-		"updateArchetypes":   {"share/chimera/archetypes", "https://github.com/chimera-rpg/archetypes"},
-		"updateMaps":         {"share/chimera/maps", "https://github.com/chimera-rpg/maps"},
-		"updateClient":       {"src/go-client", "https://github.com/chimera-rpg/go-client"},
-		"updateClientAssets": {"share/chimera/client", "https://github.com/chimera-rpg/client-data"},
+		"updateMeta":         {"./", "github.com/chimera-rpg/go-meta"},
+		"updateCommon":       {"src/go-common", "github.com/chimera-rpg/go-common"},
+		"updateServer":       {"src/go-server", "github.com/chimera-rpg/go-server"},
+		"updateEditor":       {"src/go-editor", "github.com/chimera-rpg/go-editor"},
+		"updateEditorAssets": {"share/chimera/editor", "github.com/chimera-rpg/editor-data"},
+		"updateArchetypes":   {"share/chimera/archetypes", "github.com/chimera-rpg/archetypes"},
+		"updateMaps":         {"share/chimera/maps", "github.com/chimera-rpg/maps"},
+		"updateClient":       {"src/go-client", "github.com/chimera-rpg/go-client"},
+		"updateClientAssets": {"share/chimera/client", "github.com/chimera-rpg/client-data"},
 	}
 	for taskName, repo := range repos {
 		func(taskName string, repo [2]string) {
 			Task(taskName).
 				Exists(repo[0]).
 				Catch(func(err error) error {
-					cmd := exec.Command("git", "clone", repo[1], repo[0])
+					cmd := exec.Command("git", "clone", repo[1], "https://"+repo[0])
 					err = cmd.Run()
 					return err
 				}).
@@ -88,6 +88,23 @@ func main() {
 
 	Task("runClient").
 		Exec("./bin/client" + exe)
+
+	commonModule := ""
+	Task("getCommonSHA").
+		Chdir("src/go-common").
+		Exec("git", "rev-parse", "HEAD").
+		Result(func(i interface{}) {
+			commonSHA := i.(string)
+			commonSHA = commonSHA[:len(commonSHA)-1]
+			commonModule = repos["updateCommon"][1] + "@" + commonSHA
+		})
+
+	Task("updateGoCommonDependency").
+		Run("getCommonSHA").
+		Chdir("src/go-client").
+		Exec("go", "get", "-v", "-u", &commonModule).
+		Chdir("../go-server").
+		Exec("go", "get", "-v", "-u", &commonModule)
 
 	Go()
 }
