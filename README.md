@@ -25,6 +25,9 @@ Chimera-go separates client, server, and common code, along with client and serv
   * /share/chimera/maps
     * https://github.com/chimera-rpg/maps
     * Maps
+  * /share/chimera/audio
+    * https://github.com/chimera-rpg/audio
+    * Audio
   * /share/chimera/client
     * https://github.com/chimera-rpg/client-data
     * Data assets for the client, such as UI graphics, sounds, and otherwise.
@@ -51,6 +54,7 @@ $ go run . updateAll
     git clone ...chimera-go/common src/common
     git clone ...chimera-go/archetypes share/chimera/archetypes
     git clone ...chimera-go/maps share/chimera/maps
+    git clone ...chimera-go/audio share/chimera/audio
 
 ### Client setup
 
