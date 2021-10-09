@@ -24,6 +24,7 @@ func main() {
 		"updateEditor":       {"src/go-editor", "github.com/chimera-rpg/go-editor"},
 		"updateEditorAssets": {"share/chimera/editor", "github.com/chimera-rpg/editor-data"},
 		"updateArchetypes":   {"share/chimera/archetypes", "github.com/chimera-rpg/archetypes"},
+		"updateAudio":        {"share/chimera/audio", "github.com/chimera-rpg/audio"},
 		"updateMaps":         {"share/chimera/maps", "github.com/chimera-rpg/maps"},
 		"updateClient":       {"src/go-client", "github.com/chimera-rpg/go-client"},
 		"updateClientAssets": {"share/chimera/client", "github.com/chimera-rpg/client-data"},
@@ -69,7 +70,7 @@ func main() {
 		Run("runServer")
 
 	Task("watchClient").
-		Watch("src/go-client/*.go", "src/go-client/*/*.go").
+		Watch("src/go-client/*.go", "src/go-client/*/*.go", "src/go-client/*/*/*.go").
 		Signaler(SigQuit).
 		Run("buildClient").
 		Run("runClient")
