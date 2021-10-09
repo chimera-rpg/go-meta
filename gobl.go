@@ -15,7 +15,7 @@ func main() {
 
 	// Create our repo tasks.
 	Task("updateAll").
-		Parallel("updateMeta", "updateServer", "updateCommon", "updateEditor", "updateEditorAssets", "updateArchetypes", "updateMaps", "updateClient", "updateClientAssets")
+		Parallel("updateMeta", "updateServer", "updateCommon", "updateEditor", "updateEditorAssets", "updateArchetypes", "updateMaps", "updateAudio", "updateClient", "updateClientAssets")
 
 	repos := map[string][2]string{
 		"updateMeta":         {"./", "github.com/chimera-rpg/go-meta"},
@@ -34,7 +34,7 @@ func main() {
 			Task(taskName).
 				Exists(repo[0]).
 				Catch(func(err error) error {
-					cmd := exec.Command("git", "clone", repo[1], "https://"+repo[0])
+					cmd := exec.Command("git", "clone", "https://"+repo[1], repo[0])
 					err = cmd.Run()
 					return err
 				}).
