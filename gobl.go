@@ -105,6 +105,8 @@ func main() {
 		Chdir("src/go-client").
 		Exec("go", "get", "-v", "-u", &commonModule).
 		Chdir("../go-server").
+		Exec("go", "get", "-v", "-u", &commonModule).
+		Chdir("../go-editor").
 		Exec("go", "get", "-v", "-u", &commonModule)
 
 	Go()
