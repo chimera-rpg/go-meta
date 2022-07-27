@@ -15,14 +15,13 @@ func main() {
 
 	// Create our repo tasks.
 	Task("updateAll").
-		Parallel("updateMeta", "updateServer", "updateCommon", "updateEditor", "updateEditorAssets", "updateArchetypes", "updateMaps", "updateAudio", "updateClient", "updateClientAssets")
+		Parallel("updateMeta", "updateServer", "updateCommon", "updateEditor", "updateArchetypes", "updateMaps", "updateAudio", "updateClient", "updateClientAssets")
 
 	repos := map[string][2]string{
 		"updateMeta":         {"./", "github.com/chimera-rpg/go-meta"},
 		"updateCommon":       {"src/go-common", "github.com/chimera-rpg/go-common"},
 		"updateServer":       {"src/go-server", "github.com/chimera-rpg/go-server"},
-		"updateEditor":       {"src/go-editor", "github.com/chimera-rpg/go-editor"},
-		"updateEditorAssets": {"share/chimera/editor", "github.com/chimera-rpg/editor-data"},
+		"updateEditor":       {"src/chedit", "github.com/chimera-rpg/chedit"},
 		"updateArchetypes":   {"share/chimera/archetypes", "github.com/chimera-rpg/archetypes"},
 		"updateAudio":        {"share/chimera/audio", "github.com/chimera-rpg/audio"},
 		"updateMaps":         {"share/chimera/maps", "github.com/chimera-rpg/maps"},
@@ -52,7 +51,6 @@ func main() {
 
 	builds := map[string][2]string{
 		"buildServer": {"src/go-server", "../../bin/server" + exe},
-		"buildEditor": {"src/go-editor", "../../bin/editor" + exe},
 		"buildClient": {"src/go-client", "../../bin/client" + exe},
 	}
 	for taskName, build := range builds {
@@ -74,12 +72,6 @@ func main() {
 		Signaler(SigQuit).
 		Run("buildClient").
 		Run("runClient")
-
-	Task("watchEditor").
-		Watch("src/go-editor/*.go", "src/go-editor/*/*.go", "src/go-editor/*/*/*.go").
-		Signaler(SigQuit).
-		Run("buildEditor").
-		Run("runEditor")
 
 	Task("runServer").
 		Exec("./bin/server"+exe, "--no-prompt")
@@ -105,8 +97,6 @@ func main() {
 		Chdir("src/go-client").
 		Exec("go", "get", "-v", "-u", &commonModule).
 		Chdir("../go-server").
-		Exec("go", "get", "-v", "-u", &commonModule).
-		Chdir("../go-editor").
 		Exec("go", "get", "-v", "-u", &commonModule)
 
 	Go()
