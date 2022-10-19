@@ -68,7 +68,7 @@ func main() {
 		Run("runServer")
 
 	Task("watchClient").
-		Watch("src/go-client/*.go", "src/go-client/*/*.go", "src/go-client/*/*/*.go").
+		Watch("src/go-client/*.go", "src/go-client/*/*.go", "src/go-client/*/*/*.go", "src/go-client/*/*/*/*.go").
 		Signaler(SigQuit).
 		Run("buildClient").
 		Run("runClient")
