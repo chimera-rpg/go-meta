@@ -1,0 +1,8 @@
+go 1.19
+
+use (
+	.
+	./src/chedit
+	./src/go-client
+	./src/go-server
+)
