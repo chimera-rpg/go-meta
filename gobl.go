@@ -15,11 +15,10 @@ func main() {
 
 	// Create our repo tasks.
 	Task("updateAll").
-		Parallel("updateMeta", "updateServer", "updateCommon", "updateEditor", "updateArchetypes", "updateMaps", "updateAudio", "updateClient", "updateClientAssets")
+		Parallel("updateMeta", "updateServer", "updateEditor", "updateArchetypes", "updateMaps", "updateAudio", "updateClient", "updateClientAssets")
 
 	repos := map[string][2]string{
 		"updateMeta":         {"./", "github.com/chimera-rpg/go-meta"},
-		"updateCommon":       {"src/go-common", "github.com/chimera-rpg/go-common"},
 		"updateServer":       {"src/go-server", "github.com/chimera-rpg/go-server"},
 		"updateEditor":       {"src/chedit", "github.com/chimera-rpg/chedit"},
 		"updateArchetypes":   {"share/chimera/archetypes", "github.com/chimera-rpg/archetypes"},
@@ -82,22 +81,22 @@ func main() {
 	Task("runClient").
 		Exec("./bin/client" + exe)
 
-	commonModule := ""
-	Task("getCommonSHA").
-		Chdir("src/go-common").
+	serverModule := ""
+	Task("getServerSHA").
+		Chdir("src/go-server").
 		Exec("git", "rev-parse", "HEAD").
 		Result(func(i interface{}) {
-			commonSHA := i.(string)
-			commonSHA = commonSHA[:len(commonSHA)-1]
-			commonModule = repos["updateCommon"][1] + "@" + commonSHA
+			serverSHA := i.(string)
+			serverSHA = serverSHA[:len(serverSHA)-1]
+			serverModule = repos["updateServer"][1] + "@" + serverSHA
 		})
 
-	Task("updateGoCommonDependency").
-		Run("getCommonSHA").
+	Task("updateDeps").
+		Run("getServerSHA").
 		Chdir("src/go-client").
-		Exec("go", "get", "-v", "-u", &commonModule).
-		Chdir("../go-server").
-		Exec("go", "get", "-v", "-u", &commonModule)
+		Exec("go", "get", "-v", "-u", &serverModule).
+		Chdir("../chedit").
+		Exec("go", "get", "-v", "-u", &serverModule)
 
 	Go()
 }
